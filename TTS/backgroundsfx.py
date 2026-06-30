@@ -8,8 +8,8 @@ import pygame
 # ------------------------------------------------------------------ #
 AUDIO_ROOT = "SFX/noises/"             # folder that holds all radio clips
 SUPPORTED = {".wav", ".ogg", ".mp3"}   # extensions you accept
-MIN_DELAY = 60                        # seconds
-MAX_DELAY = 120
+MIN_DELAY = 30                        # seconds
+MAX_DELAY = 60
 # ------------------------------------------------------------------ #
 
 def _load_file_list():

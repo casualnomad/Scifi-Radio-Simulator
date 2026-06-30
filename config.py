@@ -3,7 +3,7 @@ LLAMA_SERVER_URL = "http://localhost:8080/v1/chat/completions"
 
 STORY_MODEL = "ggml-org/gemma-3-12b-it-qat-GGUF:Q4_0"
 STORY_TEMPERATURE = 0.8
-STORY_MAX_TOKENS = 1200
+STORY_MAX_TOKENS = 800
 
 TRANSMISSION_MODEL = "ggml-org/gemma-3-12b-it-qat-GGUF:Q4_0"
 TRANSMISSION_TEMPERATURE = 0.9

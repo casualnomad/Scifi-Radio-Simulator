@@ -15,7 +15,10 @@ from pydub import AudioSegment
 from pydub.playback import play
 import pygame
 import threading
+import re
+import inflect
 
+p = inflect.engine()
 world = worldstate_load(config.WORLD_STATE_PATH)
 
 # -------- World Generation -------- #
@@ -39,7 +42,6 @@ def generate_radio_chatter():
     system_prompt = f""" 
         -ONLY EVER OUTPUT ONE COMMUNICATION
         - Output exactly one line per prompt, 6–20 words, with role tag (CAPT, TOWER, AI)
-        - Export all numbers as words, not digits example: "two" instead of "2", ten instead of "10"
         - No exposition, no narration, do not repeat previous line structures
         - Never repeat the same speaker twice in a row
         - Rotate between AI, TOWER, and CAPT each transmission
@@ -77,10 +79,12 @@ def generate_radio_chatter():
             response.raise_for_status()
             
             reply = response.json()["choices"][0]["message"]["content"]  
+            reply = numbers_to_words(reply)
             (world)
             world["recent_transmissions"].pop(0)  # Remove the oldest transmission if you want to keep the list size manageable
             world["recent_transmissions"].append(reply)
             worldstate_save(world, config.WORLD_STATE_PATH)
+            
             
             return user_prompt, reply
 
@@ -230,6 +234,14 @@ def play_transmission(path):
     transmission_channel.play(sound)
     while transmission_channel.get_busy():
         time.sleep(0.1)
+
+def numbers_to_words(text):
+    def digit_by_digit(match):
+        digits = match.group()
+        return "-".join(p.number_to_words(d) for d in digits)
+    
+    # Match callsign-style numbers (3-4 digits after letters/dash)
+    return re.sub(r'\d+', digit_by_digit, text)
 
 # -------- Main Loop -------- #
 def main():
