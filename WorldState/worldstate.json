@@ -1,6 +1,6 @@
 {
     "meta": {
-        "tick": 8,
+        "tick": 9,
         "session_start": "0600",
         "current_time": "1509"
     },
@@ -106,7 +106,6 @@
     ],
     "current_arc": "NVY-8102 is deploying mobile containment units to Sector Seven, prioritizing structural reinforcement. STR-911\u2019s analysis indicates the signal from the anomaly is becoming more complex, exhibiting patterns consistent with organized data transmission. TNK-9128 is nearing the jump gate. HAU-8812 is inbound on approach lane 1.",
     "recent_transmissions": [
-        "AI: TNK-9128, report inbound status and estimated time of arrival at designated docking bay.",
         "CAPT: NVY-8102, prioritize structural integrity assessments given escalating seismic activity.",
         "AI: HAU-8812, report approach status and cargo details upon arrival at docking bay.",
         "CAPT: NVY-8102, confirm structural integrity assessments; sector seven instability intensifies rapidly.",
@@ -114,6 +113,7 @@
         "CAPT: NVY-8102, prioritize sector seven structural integrity; potential cascade failure looms large.",
         "AI: MIN-067, report drone repair progress and estimated return to active duty cycle.",
         "CAPT: NVY-2160, report inbound trajectory and estimated time of arrival to docking bay.",
-        "AI: MIN-067, report status of drone repair and Coil B stabilization progress."
+        "AI: MIN-067, report status of drone repair and Coil B stabilization progress.",
+        "CAPT: NVY-2160, confirm arrival time and designated docking bay upon entering port."
     ]
 }
