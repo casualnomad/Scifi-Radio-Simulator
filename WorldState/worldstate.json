@@ -1,0 +1,119 @@
+{
+    "meta": {
+        "tick": 5,
+        "session_start": "0600",
+        "current_time": "1509"
+    },
+    "gate_status": {
+        "coil_a": "nominal",
+        "coil_b": "stabilising \u2014 down to 78% thermal, maintenance crew on site",
+        "approach_lanes": [
+            "clear",
+            "clear",
+            "restricted \u2014 rogue vessel debris"
+        ],
+        "docking_bays": [
+            1,
+            2,
+            4,
+            7,
+            9
+        ]
+    },
+    "ships": {
+        "MIN-067": {
+            "type": "utility",
+            "status": "docked",
+            "location": "bay 7",
+            "mood": "exhausted",
+            "notes": "Drone losses assessed. Repair crews dispatched to Coil B."
+        },
+        "HAU-5479": {
+            "type": "hauler",
+            "status": "docked",
+            "location": "bay 8",
+            "mood": "relieved",
+            "notes": "Cargo inspection complete. Anomalous energy readings confirmed. Customs clearance granted."
+        },
+        "NVY-2257": {
+            "type": "Navy Ship",
+            "status": "docked",
+            "location": "bay 7",
+            "mood": "focused",
+            "notes": "Containment protocol assessment ongoing. Seismic activity remains a critical factor."
+        },
+        "COU-3706": {
+            "callsign": "COU-3706",
+            "type": "Courier",
+            "location": "bay 8",
+            "status": "docked",
+            "cargo_flagged": false,
+            "mood": "determined",
+            "notes": "Customs clearance pending. Sector 7 activity heightened anxiety."
+        },
+        "HAU-6284": {
+            "callsign": "HAU-6284",
+            "type": "Hauler",
+            "location": "bay 8",
+            "status": "docked",
+            "cargo_flagged": false,
+            "mood": "worried",
+            "notes": ""
+        },
+        "NVY-8102": {
+            "callsign": "NVY-8102",
+            "type": "Navy Ship",
+            "location": "bay 9",
+            "status": "docked",
+            "cargo_flagged": false,
+            "mood": "grim",
+            "notes": ""
+        },
+        "TNK-9128": {
+            "callsign": "TNK-9128",
+            "type": "Tanker",
+            "location": "",
+            "status": "transiting",
+            "cargo_flagged": false,
+            "mood": "neutral",
+            "notes": ""
+        },
+        "HAU-8812": {
+            "type": "Hauler",
+            "location": "",
+            "status": "inbound",
+            "cargo_flagged": false,
+            "mood": "neutral",
+            "notes": ""
+        },
+        "NVY-2160": {
+            "callsign": "NVY-2160",
+            "type": "Navy Ship",
+            "location": "",
+            "status": "inbound",
+            "cargo_flagged": false,
+            "mood": "neutral",
+            "notes": ""
+        }
+    },
+    "active_events": [
+        "Coil B stabilization complete",
+        "Sector 7 anomaly continues to expand \u2014 NVY-2257 recommends containment protocol",
+        "Minor tremors detected in sector 7 \u2014 correlation with anomaly expansion under investigation, seismic activity increasing",
+        "Seismic activity in sector 7 intensifying \u2013 potential for structural instability in outlying sensor arrays",
+        "Unusual signal detected emanating from the Sector 7 anomaly \u2013 origin and nature currently unknown.",
+        "STR-911 spectral analysis indicates a complex, fluctuating energy signature emanating from Sector Seven."
+    ],
+    "current_arc": "NVY-8102 is deploying mobile containment units to Sector Seven, prioritizing structural reinforcement. STR-911\u2019s analysis indicates the signal from the anomaly is becoming more complex, exhibiting patterns consistent with organized data transmission. TNK-9128 is nearing the jump gate. HAU-8812 is inbound on approach lane 1.",
+    "recent_transmissions": [
+        "CAPT: NVY-8102, initiate containment protocol assessment; seismic instability demands immediate action.",
+        "AI: STR-911, expedite spectral analysis; unusual Sector Seven signal demands immediate attention.",
+        "CAPT: NVY-8102, assess sector seven anomaly containment, prepare for potential structural failure.",
+        "AI: TNK-9128, report inbound status and estimated time of arrival at designated docking bay.",
+        "CAPT: NVY-8102, prioritize structural integrity assessments given escalating seismic activity.",
+        "AI: HAU-8812, report approach status and cargo details upon arrival at docking bay.",
+        "CAPT: NVY-8102, confirm structural integrity assessments; sector seven instability intensifies rapidly.",
+        "AI: HAU-8812, report approach status and cargo manifest upon entry to docking bay.",
+        "CAPT: NVY-8102, prioritize sector seven structural integrity; potential cascade failure looms large."
+    ]
+}
