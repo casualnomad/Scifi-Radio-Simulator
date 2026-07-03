@@ -222,3 +222,6 @@ SFX
 pipervoices
 snapshots
 .DS_Store
+
+
+__init__.py

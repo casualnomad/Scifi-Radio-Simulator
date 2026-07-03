@@ -1,0 +1,16 @@
+
+
+# Kitten TTS (includes phonemizer & ONNX runtime)
+
+# Audio I/O
+soundfile>=0.12.1
+pydub>=0.25.1
+pygame>=2.5.2
+
+# HTTP client
+requests>=2.32.0
+
+# Text utilities
+inflect>=7.2.0
+
+scipy>=1.12.0

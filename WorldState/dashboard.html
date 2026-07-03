@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GATE CONTROL // LIVE FEED</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0906;
+    --panel: #14120d;
+    --panel-edge: #2a2419;
+    --amber: #ffb238;
+    --amber-dim: #8a6420;
+    --amber-faint: #4a3a1a;
+    --text: #e8d9b8;
+    --text-dim: #7a6f58;
+    --cyan: #6ee0d8;
+    --cyan-dim: #3a6560;
+    --magenta: #d896e8;
+    --magenta-dim: #5a3a60;
+    --red: #ff5c4d;
+    --red-dim: #5a2820;
+    --green: #7ed957;
+    --green-dim: #2a4a20;
+    --font: 'IBM Plex Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    background-image:
+      radial-gradient(ellipse at 50% 0%, rgba(255,178,56,0.05), transparent 60%);
+  }
+
+  /* CRT scanline + flicker overlay */
+  .crt-overlay {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(0,0,0,0) 0px,
+      rgba(0,0,0,0.08) 1px,
+      rgba(0,0,0,0) 2px
+    );
+    animation: flicker 6s infinite;
+    mix-blend-mode: overlay;
+  }
+  @keyframes flicker {
+    0%, 100% { opacity: 0.9; }
+    92% { opacity: 0.9; }
+    93% { opacity: 0.6; }
+    94% { opacity: 0.95; }
+    96% { opacity: 0.85; }
+  }
+
+  .frame {
+    height: 100vh;
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+  }
+
+  /* ---- Header ---- */
+  header {
+    border-bottom: 1px solid var(--panel-edge);
+    padding: 10px 20px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    background: linear-gradient(180deg, #1a1710, var(--bg));
+  }
+  .title {
+    font-weight: 700;
+    letter-spacing: 3px;
+    font-size: 15px;
+    color: var(--amber);
+    text-shadow: 0 0 8px rgba(255,178,56,0.4);
+  }
+  .title .dim { color: var(--text-dim); font-weight: 400; letter-spacing: 1px; }
+  .clockblock { display: flex; gap: 22px; align-items: baseline; font-size: 12px; color: var(--text-dim); }
+  .clockblock .val { color: var(--amber); font-weight: 600; font-size: 14px; }
+  .pulse-dot {
+    display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--green); box-shadow: 0 0 6px var(--green);
+    animation: pulse 1.6s infinite ease-in-out;
+    margin-right: 6px;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.25; } }
+
+  .story-badge {
+    color: var(--bg);
+    background: var(--amber);
+    padding: 3px 8px;
+    border-radius: 2px;
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 1px;
+    opacity: 0;
+    transform: translateY(-2px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .story-badge.show {
+    opacity: 1;
+    transform: translateY(0);
+    box-shadow: 0 0 10px rgba(255,178,56,0.6);
+  }
+
+  /* ---- Arc ticker ---- */
+  .arcbar {
+    border-bottom: 1px solid var(--panel-edge);
+    padding: 7px 20px;
+    font-size: 12.5px;
+    color: var(--text);
+    background: var(--panel);
+    white-space: normal;
+    line-height: 1.5;
+    position: relative;
+  }
+  .arcbar .label { color: var(--amber-dim); margin-right: 10px; font-weight: 600; }
+  .arcbar-text { display: inline-block; }
+
+  /* ---- Main grid ---- */
+  main {
+    display: grid;
+    grid-template-columns: 1.15fr 1.4fr 1fr;
+    gap: 1px;
+    background: var(--panel-edge);
+    overflow: hidden;
+  }
+  section.col {
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .col-head {
+    padding: 9px 14px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--amber-dim);
+    border-bottom: 1px solid var(--panel-edge);
+    display: flex;
+    justify-content: space-between;
+    background: var(--panel);
+  }
+  .col-body {
+    overflow-y: auto;
+    flex: 1;
+    padding: 4px 0;
+  }
+  .col-body::-webkit-scrollbar { width: 6px; }
+  .col-body::-webkit-scrollbar-thumb { background: var(--panel-edge); }
+  .col-body::-webkit-scrollbar-track { background: transparent; }
+
+  /* ---- Ships ---- */
+  .ship {
+    padding: 9px 14px;
+    border-bottom: 1px solid rgba(42,36,25,0.6);
+    font-size: 12px;
+  }
+  .ship-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px; }
+  .ship-call { font-weight: 700; color: var(--text); letter-spacing: 1px; }
+  .ship-type { color: var(--text-dim); font-size: 10.5px; text-transform: uppercase; letter-spacing: 1px; }
+  .led { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 7px; flex-shrink:0; }
+  .status-row { display:flex; align-items:center; }
+  .ship-meta { color: var(--text-dim); font-size: 11px; margin-top: 2px; padding-left: 14px; }
+  .ship-meta .loc { color: var(--cyan); }
+  .ship-meta .mood { color: var(--green); }
+  .ship-notes { color: var(--text-dim); font-size: 10.5px; margin-top: 3px; padding-left: 14px; line-height: 1.4; font-style: italic; }
+
+  .led.docked { background: var(--green); box-shadow: 0 0 5px var(--green); }
+  .led.holding { background: var(--amber); box-shadow: 0 0 5px var(--amber); }
+  .led.inbound { background: var(--cyan); box-shadow: 0 0 5px var(--cyan); }
+  .led.transiting { background: var(--cyan); box-shadow: 0 0 5px var(--cyan); animation: pulse 1s infinite; }
+  .led.departing, .led.departed { background: var(--text-dim); }
+  .led.unknown, .led.lost { background: var(--red); box-shadow: 0 0 5px var(--red); animation: pulse 0.8s infinite; }
+
+  /* ---- Changed-since-last-update highlighting ---- */
+  .changed {
+    border-left: 3px solid var(--amber) !important;
+    background: rgba(255,178,56,0.07) !important;
+  }
+  .new-badge {
+    display: inline-block;
+    background: var(--green);
+    color: var(--bg);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 1px 6px;
+    border-radius: 2px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .arcbar.changed { background: rgba(255,178,56,0.10) !important; }
+  .coil-row.changed { background: rgba(255,178,56,0.07); border-radius: 2px; padding-left: 4px; margin-left: -4px; }
+  .lane.changed { border-color: var(--amber) !important; box-shadow: 0 0 0 1px var(--amber); }
+
+  /* ---- Transcript ---- */
+  .tx {
+    padding: 7px 14px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-bottom: 1px solid rgba(42,36,25,0.3);
+    animation: fadein 0.4s ease;
+  }
+  @keyframes fadein { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: translateY(0); } }
+  .tx .spk { font-weight: 700; letter-spacing: 0.5px; margin-right: 6px; }
+  .tx .spk.tower { color: var(--cyan); }
+  .tx .spk.ai { color: var(--magenta); }
+  .tx .spk.capt { color: var(--amber); }
+  .tx .msg { color: var(--text); }
+  .tx.latest { background: rgba(255,178,56,0.05); border-left: 2px solid var(--amber); padding-left: 12px; }
+
+  /* ---- Events / Gate / Pending ---- */
+  .event-item, .query-item {
+    padding: 9px 14px;
+    font-size: 11.5px;
+    line-height: 1.45;
+    border-bottom: 1px solid rgba(42,36,25,0.5);
+    color: var(--text);
+  }
+  .query-item .from { color: var(--amber); font-weight: 700; margin-right: 6px; }
+  .query-item .qtext { color: var(--text-dim); }
+
+  .gate-panel { padding: 12px 14px; border-bottom: 1px solid var(--panel-edge); }
+  .docking-panel { padding: 12px 14px; border-bottom: 1px solid var(--panel-edge); }
+  .approach-panel { padding: 12px 14px; border-bottom: 1px solid var(--panel-edge); }
+  .coil-row { display: flex; justify-content: space-between; font-size: 11.5px; margin-bottom: 8px; align-items: center; }
+  .coil-row:last-child { margin-bottom: 0; }
+  .coil-label { color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase; font-size: 10px; }
+  .coil-val { font-weight: 600; }
+  .coil-val.nominal { color: var(--green); }
+  .coil-val.warn { color: var(--amber); }
+  .coil-val.crit { color: var(--red); animation: pulse 0.7s infinite; }
+
+  .lanes { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+  .lane {
+    flex: 1; min-width: 45px; padding: 5px 4px; text-align: center; font-size: 9.5px;
+    border: 1px solid var(--panel-edge); border-radius: 2px; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .lane.clear { color: var(--green); border-color: var(--green-dim); }
+  .lane.hold { color: var(--red); border-color: var(--red-dim); }
+  .lane.other { color: var(--amber); border-color: var(--amber-dim); }
+
+  .empty-msg { padding: 20px 14px; color: var(--text-dim); font-size: 11px; font-style: italic; }
+
+  footer {
+    border-top: 1px solid var(--panel-edge);
+    padding: 6px 20px;
+    font-size: 10px;
+    color: var(--text-dim);
+    display: flex;
+    justify-content: space-between;
+    background: var(--panel);
+    letter-spacing: 0.5px;
+  }
+  .conn-ok { color: var(--green); }
+  .conn-bad { color: var(--red); }
+</style>
+</head>
+<body>
+
+<div class="crt-overlay"></div>
+
+<div class="frame">
+  <header>
+    <div class="title">GATE CONTROL <span class="dim">// LIVE TRAFFIC MONITOR</span></div>
+    <div class="clockblock">
+      <span><span class="pulse-dot"></span>SESSION <span class="val" id="session-start">--</span></span>
+      <span>GATE TIME <span class="val" id="current-time">--:--</span></span>
+      <span>TICK <span class="val" id="tick">0</span></span>
+      <span id="story-update-badge" class="story-badge">WORLD UPDATED</span>
+    </div>
+  </header>
+
+  <div class="arcbar">
+    <span class="label">SITREP //</span><span class="arcbar-text" id="arc-text">Awaiting connection to world state...</span>
+  </div>
+
+  <main>
+    <section class="col" id="col-ships">
+      <div class="col-head"><span>SHIP MANIFEST</span><span id="ship-count">0</span></div>
+      <div class="col-body" id="ships-body"><div class="empty-msg">No vessels tracked.</div></div>
+    </section>
+
+    <section class="col" id="col-tx">
+      <div class="col-head"><span>COMMS TRANSCRIPT</span><span>LIVE</span></div>
+      <div class="col-body" id="tx-body"><div class="empty-msg">No transmissions yet.</div></div>
+    </section>
+
+    <section class="col" id="col-right">
+      <div class="col-head"><span>APPROACH LANES</span></div>
+      <div class="approach-panel" id="approach-panel"></div>
+      <div class="col-head"><span>GATE SYSTEMS</span></div>
+      <div class="gate-panel" id="gate-panel"></div>
+      <div class="col-head"><span>DOCKING SYSTEMS</span></div>
+      <div class="docking-panel" id="docking-panel"></div>
+      <div class="col-head"><span>ACTIVE EVENTS</span><span id="event-count">0</span></div>
+      <div class="col-body" id="events-body" style="flex: 0 1 auto; max-height: 32%;"><div class="empty-msg">No active events.</div></div>
+      <div class="col-head"><span>PENDING QUERIES</span><span id="query-count">0</span></div>
+      <div class="col-body" id="queries-body" style="flex: 0 1 auto;"><div class="empty-msg">No pending queries.</div></div>
+    </section>
+  </main>
+
+  <footer>
+    <span id="conn-status" class="conn-bad">● DISCONNECTED</span>
+    <span id="last-update">Waiting for first read...</span>
+  </footer>
+</div>
+
+<script>
+const WORLDSTATE_PATH = "worldstate.json"; // served relative to this file
+const POLL_MS = 2000;
+let lastTxSignature = "";
+
+function escapeHtml(str) {
+  const d = document.createElement('div');
+  d.innerText = str ?? "";
+  return d.innerHTML;
+}
+
+function ledClass(status) {
+  if (!status) return "unknown";
+  const s = status.toLowerCase();
+  if (["docked"].includes(s)) return "docked";
+  if (["holding"].includes(s)) return "holding";
+  if (["inbound"].includes(s)) return "inbound";
+  if (["transiting"].includes(s)) return "transiting";
+  if (["departing","departed"].includes(s)) return "departed";
+  if (["lost","unknown","destroyed"].includes(s)) return "lost";
+  return "unknown";
+}
+
+function parseSpeaker(line) {
+  const trimmed = line.trim();
+  const idx = trimmed.indexOf(":");
+  if (idx === -1) return { role: "unknown", label: "???", msg: trimmed };
+  const head = trimmed.slice(0, idx).trim();
+  const msg = trimmed.slice(idx + 1).trim();
+  const upper = head.toUpperCase();
+  if (upper.startsWith("TOWER")) return { role: "tower", label: head, msg };
+  if (upper.startsWith("AI")) return { role: "ai", label: head, msg };
+  if (upper.startsWith("CAPT")) return { role: "capt", label: head, msg };
+  return { role: "unknown", label: head, msg };
+}
+
+function coilClass(text) {
+  if (!text) return "nominal";
+  const t = text.toLowerCase();
+  if (t.includes("critical")) return "crit";
+  if (t.includes("warm") || t.includes("stabilis") || t.includes("delayed")) return "warn";
+  return "nominal";
+}
+
+function getGateA(gs) { return gs.gate_a ?? gs.coil_a; }
+function getGateB(gs) { return gs.gate_b ?? gs.coil_b; }
+
+function laneClass(text) {
+  if (!text) return "other";
+  const t = text.toLowerCase();
+  if (t.includes("clear") || t.includes("empty") || t.includes("vacant") || t.includes("free") || t.includes("available")) return "clear";
+  if (t.includes("hold") || t.includes("quarantine") || t.includes("restrict") || t.includes("busy") || t.includes("occupied")) return "hold";
+  return "other";
+}
+
+function diffWorlds(oldW, newW) {
+  const diff = {
+    ships: {},
+    newShips: new Set(),
+    arcChanged: false,
+    eventsChanged: false,
+    gateAChanged: false,
+    gateBChanged: false,
+    laneChanged: [],
+    pendingChanged: false
+  };
+  const oldShips = oldW.ships || {};
+  const newShips = newW.ships || {};
+
+  for (const cs of Object.keys(newShips)) {
+    if (!(cs in oldShips)) {
+      diff.newShips.add(cs);
+      diff.ships[cs] = true;
+      continue;
+    }
+    const a = oldShips[cs], b = newShips[cs];
+    const fields = ['type', 'status', 'location', 'mood', 'cargo', 'notes', 'cargo_flagged'];
+    const changed = fields.some(f => (a?.[f] ?? null) !== (b?.[f] ?? null));
+    if (changed) diff.ships[cs] = true;
+  }
+
+  diff.arcChanged = JSON.stringify(oldW.current_arc) !== JSON.stringify(newW.current_arc);
+  diff.eventsChanged = JSON.stringify(oldW.active_events || []) !== JSON.stringify(newW.active_events || []);
+
+  const og = oldW.gate_status || {}, ng = newW.gate_status || {};
+  diff.gateAChanged = getGateA(og) !== getGateA(ng);
+  diff.gateBChanged = getGateB(og) !== getGateB(ng);
+
+  const ol = Array.isArray(og.approach_lanes) ? og.approach_lanes : Object.values(og.approach_lanes || {});
+  const nl = Array.isArray(ng.approach_lanes) ? ng.approach_lanes : Object.values(ng.approach_lanes || {});
+  diff.laneChanged = nl.map((l, i) => l !== ol[i]);
+
+  diff.pendingChanged = JSON.stringify(oldW.pending_queries || []) !== JSON.stringify(newW.pending_queries || []);
+
+  return diff;
+}
+
+let previousWorld = null;
+let previousTick = null;
+let lastDiff = { ships: {}, newShips: new Set(), arcChanged: false, eventsChanged: false, gateAChanged: false, gateBChanged: false, laneChanged: [], pendingChanged: false };
+
+function render(world, diff) {
+  diff = diff || lastDiff;
+  // Header
+  document.getElementById("session-start").textContent = world.meta?.session_start ?? "--";
+  document.getElementById("current-time").textContent = world.meta?.current_time ?? "--:--";
+  document.getElementById("tick").textContent = world.meta?.tick ?? 0;
+  document.getElementById("arc-text").textContent = world.current_arc || "No active situation report.";
+  document.querySelector(".arcbar").classList.toggle("changed", diff.arcChanged);
+
+  // Ships
+  const ships = world.ships || {};
+  const callsigns = Object.keys(ships);
+  document.getElementById("ship-count").textContent = callsigns.length;
+  const shipsBody = document.getElementById("ships-body");
+  if (callsigns.length === 0) {
+    shipsBody.innerHTML = '<div class="empty-msg">No vessels tracked.</div>';
+  } else {
+    shipsBody.innerHTML = callsigns.map(cs => {
+      const s = ships[cs];
+      const status = s.status || "unknown";
+      const isChanged = !!diff.ships[cs];
+      const isNew = diff.newShips.has(cs);
+      return `
+        <div class="ship ${isChanged ? 'changed' : ''}">
+          <div class="ship-top">
+            <span class="status-row"><span class="led ${ledClass(status)}"></span><span class="ship-call">${escapeHtml(cs)}</span>${isNew ? '<span class="new-badge">NEW</span>' : ''}</span>
+            <span class="ship-type">${escapeHtml(s.type || "?")}</span>
+          </div>
+          <div class="ship-meta">
+            <span class="loc">Location: ${escapeHtml(s.location || "unknown")}</span> <br> status: <span class="mood"> ${escapeHtml(status)}</span> </br> mood: <span class="mood">${escapeHtml(s.mood || "neutral")}</span> · faction: <span class="mood">${escapeHtml(s.faction || "unknown")}</span> · job: <span class="mood">${escapeHtml(s.job || "unknown")}</span> · cargo: <span class="mood">${escapeHtml(s.cargo || "none")}</span>
+          </div>
+          ${s.notes ? `<div class="ship-notes">${escapeHtml(s.notes)}</div>` : ""}
+        </div>`;
+    }).join("");
+  }
+
+  // Transcript
+  const tx = world.recent_transmissions || [];
+  const sig = tx.join("|");
+  if (sig !== lastTxSignature) {
+    lastTxSignature = sig;
+    const txBody = document.getElementById("tx-body");
+    if (tx.length === 0) {
+      txBody.innerHTML = '<div class="empty-msg">No transmissions yet.</div>';
+    } else {
+      txBody.innerHTML = tx.map((line, i) => {
+        const p = parseSpeaker(line);
+        const isLatest = i === tx.length - 1;
+        return `<div class="tx ${isLatest ? 'latest' : ''}">
+          <span class="spk ${p.role}">${escapeHtml(p.label)}:</span><span class="msg">${escapeHtml(p.msg)}</span>
+        </div>`;
+      }).join("");
+      txBody.scrollTop = txBody.scrollHeight;
+    }
+  }
+
+  // Gate systems + Docking Bays
+  const gs = world.gate_status || {};
+  const al = world.approach_lanes || {};
+  const db = world.docking_bays || {};
+  const gatePanel = document.getElementById("gate-panel");
+  const approachPanel = document.getElementById("approach-panel");
+  const dockingPanel = document.getElementById("docking-panel");
+  
+  const lanes = Array.isArray(al) 
+    ? al 
+    : Object.values(al || {});
+
+  const gates = Array.isArray(gs) 
+    ? gs 
+    : Object.values(gs || {});
+
+  const docks = Array.isArray(db) 
+    ? db 
+    : Object.values(db || {});  
+
+  // Parse docking bays entries (safely handling object mapping)
+  const dockingEntries = Object.entries(db || {});
+
+  const gateAVal = getGateA(gs);
+  const gateBVal = getGateB(gs);
+  
+  gatePanel.innerHTML = `
+    <div class="lanes">
+      ${gates.map((l,i) => `<div class="lane ${laneClass(l)}">Gate ${i+1}<br>${escapeHtml((l||"").split(" ")[0] || "?")}</div>`).join("")}
+    </div>
+    `;
+
+  dockingPanel.innerHTML = `
+    ${dockingEntries.length > 0 ? `
+      <div class="lanes">
+        ${dockingEntries.map(([key, val]) => {
+          const shortKey = key.replace(/[^0-9]/g, ''); // Extracts just the number (e.g. "Dock 1" -> "D1")
+          const displayKey = shortKey ? `Bay ${shortKey}` : key.substring(0, 3);
+          return `<div class="lane ${laneClass(val)}">${escapeHtml(displayKey)}<br>${escapeHtml((val||"").split(" ")[0] || "?")}</div>`;
+        }).join("")}
+      </div>
+    ` : ''}
+  `;
+
+  approachPanel.innerHTML = `
+    <div class="lanes">
+      ${lanes.map((l,i) => `<div class="lane ${laneClass(l)}">Lane ${i+1}<br>${escapeHtml((l||"").split(" ")[0] || "?")}</div>`).join("")}
+    </div>
+  `;
+
+
+  // Active events
+  const events = world.active_events || [];
+  document.getElementById("event-count").textContent = events.length;
+  const eventsBody = document.getElementById("events-body");
+  eventsBody.innerHTML = events.length
+    ? events.map(e => `<div class="event-item ${diff.eventsChanged ? 'changed' : ''}">${escapeHtml(e)}</div>`).join("")
+    : '<div class="empty-msg">No active events.</div>';
+
+  // Pending queries
+  const pending = (world.pending_queries || []).filter(q => typeof q === "object");
+  document.getElementById("query-count").textContent = pending.length;
+  const queriesBody = document.getElementById("queries-body");
+  queriesBody.innerHTML = pending.length
+    ? pending.map(q => `<div class="query-item ${diff.pendingChanged ? 'changed' : ''}"><span class="from">${escapeHtml(q.from || "?")}</span><span class="qtext">${escapeHtml(q.query || "")}</span></div>`).join("")
+    : '<div class="empty-msg">No pending queries.</div>';
+}
+
+async function poll() {
+  try {
+    const res = await fetch(WORLDSTATE_PATH + "?t=" + Date.now(), { cache: "no-store" });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const world = await res.json();
+
+    const currentTick = world.meta?.tick ?? 0;
+
+    if (previousWorld && previousTick !== null && currentTick === 0 && previousTick !== 0) {
+      lastDiff = diffWorlds(previousWorld, world);
+      const badge = document.getElementById("story-update-badge");
+      if (badge) {
+        badge.classList.add("show");
+        setTimeout(() => badge.classList.remove("show"), 4000);
+      }
+    }
+
+    render(world, lastDiff);
+    previousWorld = world;
+    previousTick = currentTick;
+
+    document.getElementById("conn-status").textContent = "● LIVE";
+    document.getElementById("conn-status").className = "conn-ok";
+    document.getElementById("last-update").textContent = "Last sync: " + new Date().toLocaleTimeString();
+  } catch (err) {
+    document.getElementById("conn-status").textContent = "● DISCONNECTED";
+    document.getElementById("conn-status").className = "conn-bad";
+    document.getElementById("last-update").textContent = "Error: " + err.message;
+  }
+}
+
+poll();
+setInterval(poll, POLL_MS);
+</script>
+
+</body>
+</html>

@@ -1,119 +1,165 @@
 {
     "meta": {
-        "tick": 10,
-        "session_start": "0600",
-        "current_time": "1509"
+        "tick": 0,
+        "session_start": "0001",
+        "current_time": "0055"
     },
     "gate_status": {
-        "coil_a": "nominal",
-        "coil_b": "stabilising \u2014 down to 78% thermal, maintenance crew on site",
-        "approach_lanes": [
-            "clear",
-            "clear",
-            "restricted \u2014 rogue vessel debris"
-        ],
-        "docking_bays": [
-            1,
-            2,
-            4,
-            7,
-            9
-        ]
+        "gate_a": "vacant",
+        "gate_b": "busy"
+    },
+    "approach_lanes": {
+        "Lane 1": "restricted",
+        "Lane 2": "available",
+        "Lane 3": "restricted",
+        "Lane 4": "vacant"
+    },
+    "docking_bays": {
+        "Dock 1": "vacant",
+        "Dock 2": "occupied",
+        "Dock 3": "occupied",
+        "Dock 4": "occupied",
+        "Dock 5": "occupied",
+        "Dock 6": "vacant",
+        "Dock 7": "occupied"
     },
     "ships": {
-        "MIN-067": {
-            "type": "utility",
-            "status": "docked",
-            "location": "bay 7",
-            "mood": "exhausted",
-            "notes": "Drone losses assessed. Repair crews dispatched to Coil B."
-        },
-        "HAU-5479": {
-            "type": "hauler",
-            "status": "docked",
-            "location": "bay 8",
-            "mood": "relieved",
-            "notes": "Cargo inspection complete. Anomalous energy readings confirmed. Customs clearance granted."
-        },
         "NVY-2257": {
+            "callsign": "NVY-2257",
             "type": "Navy Ship",
-            "status": "docked",
-            "location": "bay 7",
+            "status": "investigating",
+            "location": "sector four",
+            "cargo": null,
+            "cargo_flagged": false,
+            "faction": "Navy",
+            "job": "Law Enforcement",
+            "mood": "concerned",
+            "notes": "Unauthorized data siphon confirmed; suspects are mobilizing."
+        },
+        "SCI-5408": {
+            "callsign": "SCI-5408",
+            "type": "Science Vessel",
+            "status": "sampling",
+            "location": "outer scan range",
+            "cargo": "artifact sample",
+            "cargo_flagged": "restricted",
+            "faction": "Explorers' League",
+            "job": "Xenotech Research",
             "mood": "focused",
-            "notes": "Containment protocol assessment ongoing. Seismic activity remains a critical factor."
+            "notes": "Spectral analysis progressing."
         },
-        "COU-3706": {
-            "callsign": "COU-3706",
+        "ORE-4817": {
+            "callsign": "ORE-4817",
+            "type": "Mining Barge",
+            "location": "sector six",
+            "status": "stabilizing",
+            "cargo": "ore",
+            "cargo_flagged": "legal",
+            "faction": "Alliance",
+            "job": "Ore hauler",
+            "mood": "hopeful",
+            "notes": "Receiving support from ORE-7747; structural integrity holding."
+        },
+        "REF-2918": {
+            "callsign": "REF-2918",
+            "type": "Repair Tender",
+            "location": "docking bay 5",
+            "status": "docked",
+            "cargo": "repair kits",
+            "cargo_flagged": "legal",
+            "faction": "Pirates",
+            "job": "Salvage engineer",
+            "mood": "relieved",
+            "notes": "Repair operations completed."
+        },
+        "ESC-1357": {
+            "callsign": "ESC-1357",
+            "type": "Escort Corvette",
+            "location": "sector one",
+            "status": "evading_combat",
+            "cargo": "none",
+            "cargo_flagged": "legal",
+            "faction": "Mining Consortium",
+            "job": "Escort captain",
+            "mood": "stressed",
+            "notes": "Under heavy fire from FRG-8707."
+        },
+        "COU-4904": {
+            "callsign": "COU-4904",
             "type": "Courier",
-            "location": "bay 8",
-            "status": "docked",
-            "cargo_flagged": false,
-            "mood": "determined",
-            "notes": "Customs clearance pending. Sector 7 activity heightened anxiety."
+            "location": "docking bay 3",
+            "status": "trading",
+            "cargo": "consumer goods",
+            "cargo_flagged": "legal",
+            "faction": "Mining Consortium",
+            "job": "Station trader",
+            "mood": "excited",
+            "notes": "Trade operations ongoing."
         },
-        "HAU-6284": {
-            "callsign": "HAU-6284",
-            "type": "Hauler",
-            "location": "bay 8",
-            "status": "docked",
-            "cargo_flagged": false,
-            "mood": "worried",
-            "notes": ""
+        "ESC-835": {
+            "callsign": "ESC-835",
+            "type": "Escort Corvette",
+            "location": "sector one",
+            "status": "maintaining_surveillance",
+            "cargo": "ammo",
+            "cargo_flagged": "legal",
+            "faction": "Religious Order",
+            "job": "Escort captain",
+            "mood": "cautious",
+            "notes": "Maintaining surveillance."
         },
-        "NVY-8102": {
-            "callsign": "NVY-8102",
-            "type": "Navy Ship",
-            "location": "bay 9",
-            "status": "docked",
-            "cargo_flagged": false,
-            "mood": "grim",
-            "notes": ""
+        "FRG-8707": {
+            "callsign": "FRG-8707",
+            "type": "Frigate",
+            "location": "sector one",
+            "status": "engaging",
+            "cargo": "weapons",
+            "cargo_flagged": "restricted",
+            "faction": "Religious Order",
+            "job": "Pirate raider",
+            "mood": "aggressive",
+            "notes": "Actively engaging ESC-1357."
         },
-        "TNK-9128": {
-            "callsign": "TNK-9128",
-            "type": "Tanker",
-            "location": "",
-            "status": "transiting",
-            "cargo_flagged": false,
-            "mood": "neutral",
-            "notes": ""
-        },
-        "HAU-8812": {
-            "type": "Hauler",
-            "location": "",
-            "status": "inbound",
-            "cargo_flagged": false,
-            "mood": "neutral",
-            "notes": ""
-        },
-        "NVY-2160": {
-            "callsign": "NVY-2160",
-            "type": "Navy Ship",
-            "location": "",
-            "status": "inbound",
-            "cargo_flagged": false,
-            "mood": "neutral",
-            "notes": ""
+        "ORE-7747": {
+            "location": "sector six",
+            "status": "assisting",
+            "mood": "cooperative",
+            "notes": "Providing support to ORE-4817.",
+            "faction": "Unknown",
+            "job": "Unknown"
         }
     },
     "active_events": [
-        "Coil B stabilization complete",
-        "Sector 7 anomaly continues to expand \u2014 NVY-2257 recommends containment protocol",
-        "Minor tremors detected in sector 7 \u2014 correlation with anomaly expansion under investigation, seismic activity increasing",
-        "Seismic activity in sector 7 intensifying \u2013 potential for structural instability in outlying sensor arrays",
-        "Unusual signal detected emanating from the Sector 7 anomaly \u2013 origin and nature currently unknown.",
-        "STR-911 spectral analysis indicates a complex, fluctuating energy signature emanating from Sector Seven."
+        "The science vessel SCI-5408 continues its sampling operation in outer scan range.",
+        "The frigate FRG-8707 actively engages ESC-one-three-five-seven in sector one."
     ],
-    "current_arc": "NVY-8102 is deploying mobile containment units to Sector Seven, prioritizing structural reinforcement. STR-911\u2019s analysis indicates the signal from the anomaly is becoming more complex, exhibiting patterns consistent with organized data transmission. TNK-9128 is nearing the jump gate. HAU-8812 is inbound on approach lane 1.",
+    "current_arc": "NVY-2257 confirms data siphon. Combat flares up as FRG-8707 engages ESC-1357.",
     "recent_transmissions": [
-        "CAPT: NVY-8102, prioritize structural integrity assessments given escalating seismic activity.",
-        "AI: HAU-8812, report approach status and cargo details upon arrival at docking bay.",
-        "CAPT: NVY-8102, confirm structural integrity assessments; sector seven instability intensifies rapidly.",
-        "AI: HAU-8812, report approach status and cargo manifest upon entry to docking bay.",
-        "CAPT: NVY-8102, prioritize sector seven structural integrity; potential cascade failure looms large.",
-        "AI: MIN-067, report drone repair progress and estimated return to active duty cycle.",
-        "CAPT: NVY-2160, report inbound trajectory and estimated time of arrival to docking bay.",
-        "AI: MIN-067, report status of drone repair and Coil B stabilization progress.",
-        "CAPT: NVY-2160, confirm arrival time and designated docking bay upon entering port."
+        " TOWER: Unidentified vessel in sector one, this is Tower. I see you're closing in on ESC-one-three-five-seven. Please confirm your callsign, faction, and intentions. If you do not respond, we will assume hostile intent and take appropriate action.",
+        "CAPT: NVY-two-two-five-seven, this is Captain NVY-two-two-five-seven. Any updates on your investigation progress in sector four? Over.",
+        "AI: Attention all ships, the mining barge ORE-four-eight-one-seven is in distress. Please assist.",
+        "TOWER: ORE-four-eight-one-seven, this is Tower. Your progress in sector six is noted. Are you in need of further assistance?",
+        "CAPT: NVY-two-two-five-seven, this is Captain NVY-two-two-five-seven. Any updates on your investigation in sector four? Over.",
+        "AI: Attention all ships, the mining barge ORE-four-eight-one-seven is in distress. Please assist.",
+        "TOWER: ORE-four-eight-one-seven, this is Tower. Your progress in sector six is noted. Are you in need of further assistance?",
+        "CAPT: NVY-two-two-five-seven, this is Captain NVY-two-two-five-seven. Your sector four investigation is ongoing \u2014 any new developments? Over.",
+        "AI: Attention all ships, the mining barge ORE-four-eight-one-seven is in distress. Please assist.",
+        "TOWER: ORE-four-eight-one-seven, this is Tower. Your progress in sector six is noted. Are you in need of further assistance?",
+        "CAPT: NVY-two-two-five-seven, this is Captain. Your sector four investigation is ongoing \u2014 any new developments? Over.",
+        "AI: Attention all ships, the pirate frigate FRG-eight-seven-zero-seven is closing in on ESC-one-three-five-seven in sector one. Provide assistance if you can.",
+        "TOWER: ORE-four-eight-one-seven, this is Tower. Your progress in sector six is noted. Are you in need of further assistance?",
+        "CAPT: NVY-two-two-five-seven, this is Captain. Your sector four investigation is ongoing \u2014 any new developments? Over.",
+        "AI: Attention all ships, the pirate frigate FRG-eight-seven-zero-seven is closing in on ESC-one-three-five-seven in sector one. Provide assistance if you can.",
+        "TOWER: ORE-four-eight-one-seven, this is Tower. Your progress in sector six is noted. Are you in need of further assistance?",
+        "CAPT: NVY-two-two-five-seven, this is Captain. Any new developments in sector four? Over.",
+        "AI: Attention all ships, the pirate frigate FRG-eight-seven-zero-seven is closing in on ESC-one-three-five-seven in sector one. Provide assistance if you can."
+    ],
+    "pending_queries": [
+        {
+            "from": "CAPT",
+            "query": "Any new developments in sector four?",
+            "answered": false,
+            "repeated": 1
+        }
     ]
 }
