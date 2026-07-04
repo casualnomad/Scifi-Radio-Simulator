@@ -2,7 +2,7 @@
     "meta": {
         "tick": 0,
         "session_start": "0001",
-        "current_time": "0055"
+        "current_time": "0105"
     },
     "gate_status": {
         "gate_a": "vacant",
@@ -27,14 +27,14 @@
         "NVY-2257": {
             "callsign": "NVY-2257",
             "type": "Navy Ship",
-            "status": "investigating",
+            "status": "tracking",
             "location": "sector four",
             "cargo": null,
             "cargo_flagged": false,
             "faction": "Navy",
             "job": "Law Enforcement",
-            "mood": "concerned",
-            "notes": "Unauthorized data siphon confirmed; suspects are mobilizing."
+            "mood": "determined",
+            "notes": "Suspects traced to a specific sector entrance."
         },
         "SCI-5408": {
             "callsign": "SCI-5408",
@@ -81,8 +81,8 @@
             "cargo_flagged": "legal",
             "faction": "Mining Consortium",
             "job": "Escort captain",
-            "mood": "stressed",
-            "notes": "Under heavy fire from FRG-8707."
+            "mood": "desperate",
+            "notes": "Under heavy fire; damage accumulating."
         },
         "COU-4904": {
             "callsign": "COU-4904",
@@ -100,13 +100,13 @@
             "callsign": "ESC-835",
             "type": "Escort Corvette",
             "location": "sector one",
-            "status": "maintaining_surveillance",
+            "status": "engaging_combat",
             "cargo": "ammo",
             "cargo_flagged": "legal",
             "faction": "Religious Order",
             "job": "Escort captain",
-            "mood": "cautious",
-            "notes": "Maintaining surveillance."
+            "mood": "determined",
+            "notes": "Intervening to protect the sector."
         },
         "FRG-8707": {
             "callsign": "FRG-8707",
@@ -118,7 +118,7 @@
             "faction": "Religious Order",
             "job": "Pirate raider",
             "mood": "aggressive",
-            "notes": "Actively engaging ESC-1357."
+            "notes": "Continuing aggressive assault against the targets."
         },
         "ORE-7747": {
             "location": "sector six",
@@ -130,15 +130,11 @@
         }
     },
     "active_events": [
-        "The science vessel SCI-5408 continues its sampling operation in outer scan range.",
-        "The frigate FRG-8707 actively engages ESC-one-three-five-seven in sector one."
+        "FRG-8707 heavily pressures ESC-1357 in sector one.",
+        "NVY-2257 tracks data siphon suspects to a specific sector."
     ],
-    "current_arc": "NVY-2257 confirms data siphon. Combat flares up as FRG-8707 engages ESC-1357.",
+    "current_arc": "ESC-835 intervenes in sector one combat while NVY-2257 narrows the suspect pursuit.",
     "recent_transmissions": [
-        " TOWER: Unidentified vessel in sector one, this is Tower. I see you're closing in on ESC-one-three-five-seven. Please confirm your callsign, faction, and intentions. If you do not respond, we will assume hostile intent and take appropriate action.",
-        "CAPT: NVY-two-two-five-seven, this is Captain NVY-two-two-five-seven. Any updates on your investigation progress in sector four? Over.",
-        "AI: Attention all ships, the mining barge ORE-four-eight-one-seven is in distress. Please assist.",
-        "TOWER: ORE-four-eight-one-seven, this is Tower. Your progress in sector six is noted. Are you in need of further assistance?",
         "CAPT: NVY-two-two-five-seven, this is Captain NVY-two-two-five-seven. Any updates on your investigation in sector four? Over.",
         "AI: Attention all ships, the mining barge ORE-four-eight-one-seven is in distress. Please assist.",
         "TOWER: ORE-four-eight-one-seven, this is Tower. Your progress in sector six is noted. Are you in need of further assistance?",
@@ -152,14 +148,18 @@
         "AI: Attention all ships, the pirate frigate FRG-eight-seven-zero-seven is closing in on ESC-one-three-five-seven in sector one. Provide assistance if you can.",
         "TOWER: ORE-four-eight-one-seven, this is Tower. Your progress in sector six is noted. Are you in need of further assistance?",
         "CAPT: NVY-two-two-five-seven, this is Captain. Any new developments in sector four? Over.",
-        "AI: Attention all ships, the pirate frigate FRG-eight-seven-zero-seven is closing in on ESC-one-three-five-seven in sector one. Provide assistance if you can."
+        "AI: Attention all ships, the pirate frigate FRG-eight-seven-zero-seven is closing in on ESC-one-three-five-seven in sector one. Provide assistance if you can.",
+        "TOWER: ORE-four-eight-one-seven, this is Tower. Your status in sector six is noted. Are you in need of further assistance?",
+        "CAPT: NVY-two-two-five-seven, this is Captain. Any new developments in sector four? Over.",
+        "AI: Attention all ships, FRG-eight-seven-zero-seven is closing in on ESC-one-three-five-seven in sector one. Provide support if possible.",
+        "TOWER: NVY-two-two-five-seven, this is Tower. Sector four is clear. No new developments."
     ],
     "pending_queries": [
         {
             "from": "CAPT",
             "query": "Any new developments in sector four?",
             "answered": false,
-            "repeated": 1
+            "repeated": 2
         }
     ]
 }
