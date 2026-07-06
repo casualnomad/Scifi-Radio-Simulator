@@ -5,18 +5,19 @@ import datetime
 import os
 import http.server
 import functools
+import json
 
 import config
 import pygame
 
-from TTS import backgroundsfx, backgroundsound
-from LLM.promptutils import numbers_to_words, ship_lines, compact
+from TTS import backgroundsfx
 from TTS.texttospeech import generate_tts
-from WorldState.worldstate import world, worldstate_save, story_lock
-from LLM.generateTransmission import generate_radio_chatter, generate_local_radio_chatter
-from LLM.generateStory import generate_world_state, generate_local_world_state
+from WorldState.worldstate import world, worldstate_save, story_lock, set_injection
+from LLM.generateTransmission import generate_radio_chatter
+from LLM.generateStory import generate_world_state
 
 story_thread = None
+
 
 # -------- Character Selector -------- #
 def choose_character(chatter):
@@ -28,11 +29,11 @@ def choose_character(chatter):
     instead of silently falling through to an unused Default voice."""
     if not chatter or ":" not in chatter:
         return "Captain", chatter or ""
- 
+
     name_part, message_part = chatter.split(":", 1)
     name_part = name_part.strip().upper()
     message_part = message_part.strip()
- 
+
     if name_part.startswith("TOWER") or name_part.startswith("CONTROL"):
         return "Tower", message_part
     elif name_part.startswith("AI") or name_part.startswith("COMPUTER"):
@@ -55,21 +56,41 @@ def start_dashboard_server():
     that's wherever config.WORLD_STATE_PATH points."""
     directory = os.path.dirname(os.path.abspath(config.WORLD_STATE_PATH)) or "."
     port = getattr(config, "DASHBOARD_PORT", 8000)
- 
+
     class QuietHandler(http.server.SimpleHTTPRequestHandler):
         def log_message(self, format, *args):
             pass  # suppress the per-request access log line
- 
+
+        def do_POST(self):
+            if self.path == "/inject":
+                length = int(self.headers.get("Content-Length", 0))
+                body = self.rfile.read(length).decode("utf-8", errors="ignore")
+                try:
+                    text = json.loads(body).get("text", "").strip()
+                except json.JSONDecodeError:
+                    text = body.strip()
+
+                if text:
+                    set_injection(text)
+                    print(f"--- Plot injection received: {text} ---")
+                    self.send_response(200)
+                else:
+                    self.send_response(400)
+                self.end_headers()
+            else:
+                self.send_response(404)
+                self.end_headers()
+
     handler = functools.partial(QuietHandler, directory=directory)
     http.server.ThreadingHTTPServer.allow_reuse_address = True
- 
+
     try:
         httpd = http.server.ThreadingHTTPServer(("", port), handler)
     except OSError as e:
         print(f"--- Dashboard server failed to start on port {port}: {e} ---")
         print("--- (is your old manual server still running on this port?) ---")
         return
- 
+
     print(f"--- Dashboard live at http://localhost:{port}/dashboard.html (serving {directory}) ---")
     httpd.serve_forever()
 
@@ -77,7 +98,6 @@ def start_dashboard_server():
 # -------- Main Loop -------- #
 def main():
     global story_thread
-    
     print("--- Space Radio Initialized ---")
 
     if "stream_start" not in world["meta"]:
@@ -92,8 +112,8 @@ def main():
     pygame.mixer.music.play(-1)  # loop forever
 
     backgroundsfx.start()
-    tick = world["meta"]["tick"]
 
+    tick = world["meta"]["tick"]
     try:
         while True:
             tick += 1
@@ -110,15 +130,13 @@ def main():
                         )
                         story_thread.start()
 
-            chatter = generate_local_radio_chatter()
+            chatter = generate_radio_chatter()
 
             if not chatter or chatter == "System: Comms link failure.":
                 print("No response from comms.")
                 continue
-            
-            reply = numbers_to_words(chatter)
 
-            character, trimmed_text = choose_character(reply)
+            character, trimmed_text = choose_character(chatter)
 
             print("\n" + "=" * 60)
             print(f"SPEAKER:   {character}")

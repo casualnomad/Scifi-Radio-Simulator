@@ -3,8 +3,7 @@ import requests
 import json
 import time
 import apikey
-
-from WorldState.worldstate import world, worldstate_save, save_snapshot, story_lock
+from WorldState.worldstate import world, worldstate_save, save_snapshot, story_lock, pop_injection
 from WorldState.shipgen import spawn_ship
 from LLM.promptutils import ship_lines, compact
 
@@ -23,10 +22,8 @@ Rules:
 
 pending_queries: list of {"from", "query", "answered"}, max 3, oldest dropped first. Add when CAPT asks TOWER/AI a question ("answered": false). Set true only when TOWER/AI replies DIRECTLY to that callsign — a general broadcast doesn't count.
 
- 
-Return JSON only, no markdown, no explanation. Match this exact structure — this is a real example, replace the values with what's actually happening, only include values that have changed:
-{"ships": {"NVY-1140": {"location": "sector one", "status": "patrolling", "mood": "alert", "notes": "Standard patrol continuing.", "faction": "Navy", "job": "Law Enforcement"}}, "active_events": ["A quiet morning shift continues at the gate."], "current_arc": "Routine operations continue at the gate.", "meta": {"tick": 0, "current_time": "0610"}, "gate_status": {"gate_a": "vacant", "gate_b": "vacant"}, "docking_bays": {"Bay 1": "Vacant", "Bay 2": "Occupied","Bay 3": "Vacant", "Bay 4": "Occupied","Bay 5": "Vacant", "Bay 6": "Occupied","Bay 7": "Vacant"}, "approach_lanes": {"Lane 1": "clear", "Lane 2": "restricted"}, "pending_queries": [{"from": "NVY-1140", "query": "Requesting docking clearance", "answered": false}]}"""
-
+Return JSON only, no markdown, no explanation. Match this exact structure — this is a real example, replace the values with what's actually happening, only include ships that changed:
+{"ships": {"NVY-1140": {"location": "sector one", "status": "patrolling", "mood": "alert", "notes": "Standard patrol continuing.", "faction": "Navy", "job": "Law Enforcement"}}, "active_events": ["A quiet morning shift continues at the gate."], "current_arc": "Routine operations continue at the gate.", "meta": {"tick": 0, "current_time": "0610"}, "gate_status": {"gate_a": "vacant", "gate_b": "vacant"}, "docking_bays": {"Dock 1": "vacant", "Dock 2": "occupied"}, "approach_lanes": {"Lane 1": "available", "Lane 2": "vacant"}, "pending_queries": [{"from": "NVY-1140", "query": "Requesting docking clearance", "answered": false}]}"""
 
 
 def build_world_prompt():
@@ -39,10 +36,16 @@ def build_world_prompt():
         f"lanes[{compact(world['approach_lanes'])}]"
     )
     active_events = "\n".join(f"- {e}" for e in world["active_events"])
-    recent = "\n".join(world["recent_transmissions"][-7:]) #[-5:]
-    print (recent)
+    recent = "\n".join(world["recent_transmissions"][-5:])
 
-    return f"""Ships: {ships}
+    injection = pop_injection()
+    director_note = (
+        f"\nDirector's note: {injection}\nWork this into the story naturally, over this update or the next couple.\n"
+        if injection else ""
+    )
+
+    return f"""Ships:
+{ships}
 
 Station: {station}
 
@@ -57,7 +60,7 @@ Meta: tick={world['meta']['tick']}, time={world['meta']['current_time']}
 
 Recent transmissions:
 {recent}
-
+{director_note}
 Advance the simulation 10 minutes. Return JSON only."""
 
 
@@ -182,7 +185,6 @@ def ingest_world_state(updates):
                 if not isinstance(data, dict):
                     print(f"Skipping malformed update for {callsign}: expected dict, got {type(data).__name__} -> {data!r}")
                     continue
-
                 if callsign in world["ships"]:
                     world["ships"][callsign].update(data)
                 else:

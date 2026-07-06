@@ -129,6 +129,43 @@
   .arcbar .label { color: var(--amber-dim); margin-right: 10px; font-weight: 600; }
   .arcbar-text { display: inline-block; }
 
+  .inject-bar {
+    border-bottom: 1px solid var(--panel-edge);
+    padding: 7px 20px;
+    font-size: 12.5px;
+    background: var(--panel);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .inject-bar .label { color: var(--cyan-dim); font-weight: 600; white-space: nowrap; }
+  .inject-bar input {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--panel-edge);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 12.5px;
+    padding: 5px 8px;
+    outline: none;
+  }
+  .inject-bar input:focus { border-color: var(--cyan-dim); }
+  .inject-bar button {
+    background: transparent;
+    border: 1px solid var(--cyan-dim);
+    color: var(--cyan);
+    font-family: var(--font);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 14px;
+    cursor: pointer;
+  }
+  .inject-bar button:hover { background: rgba(110,224,216,0.1); }
+  .inject-bar button:disabled { opacity: 0.4; cursor: default; }
+  .inject-status { font-size: 11px; color: var(--text-dim); min-width: 90px; }
+  .inject-status.ok { color: var(--green); }
+  .inject-status.err { color: var(--red); }
+
   /* ---- Main grid ---- */
   main {
     display: grid;
@@ -290,6 +327,13 @@
     <span class="label">SITREP //</span><span class="arcbar-text" id="arc-text">Awaiting connection to world state...</span>
   </div>
 
+  <div class="inject-bar">
+    <span class="label">DIRECTOR //</span>
+    <input type="text" id="inject-input" placeholder="Queue a plot point for the next world update..." maxlength="240">
+    <button id="inject-btn" onclick="sendInjection()">INJECT</button>
+    <span class="inject-status" id="inject-status"></span>
+  </div>
+
   <main>
     <section class="col" id="col-ships">
       <div class="col-head"><span>SHIP MANIFEST</span><span id="ship-count">0</span></div>
@@ -389,7 +433,7 @@ function getGateB(gs) { return gs.gate_b ?? gs.coil_b; }
 function laneClass(text) {
   if (!text) return "other";
   const t = text.toLowerCase();
-  if (t.includes("clear") || t.includes("empty") || t.includes("vacant") || t.includes("free") || t.includes("available") || t.includes("open")) return "clear";
+  if (t.includes("clear") || t.includes("empty") || t.includes("vacant") || t.includes("free") || t.includes("available")) return "clear";
   if (t.includes("hold") || t.includes("quarantine") || t.includes("restrict") || t.includes("busy") || t.includes("occupied")) return "hold";
   return "other";
 }
@@ -604,6 +648,44 @@ async function poll() {
 }
 
 poll();
+async function sendInjection() {
+  const input = document.getElementById("inject-input");
+  const btn = document.getElementById("inject-btn");
+  const status = document.getElementById("inject-status");
+  const text = input.value.trim();
+  if (!text) return;
+
+  btn.disabled = true;
+  status.textContent = "sending...";
+  status.className = "inject-status";
+
+  try {
+    const res = await fetch("/inject", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text })
+    });
+    if (res.ok) {
+      status.textContent = "queued ✓";
+      status.className = "inject-status ok";
+      input.value = "";
+    } else {
+      status.textContent = "failed";
+      status.className = "inject-status err";
+    }
+  } catch (e) {
+    status.textContent = "connection error";
+    status.className = "inject-status err";
+  }
+
+  btn.disabled = false;
+  setTimeout(() => { status.textContent = ""; }, 4000);
+}
+
+document.getElementById("inject-input").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") sendInjection();
+});
+
 setInterval(poll, POLL_MS);
 </script>
 

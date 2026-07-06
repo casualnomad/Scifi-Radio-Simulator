@@ -29,3 +29,21 @@ def save_snapshot(world):
 # loading their own copy, so a mutation in one module is visible to the others.
 world = worldstate_load(config.WORLD_STATE_PATH)
 story_lock = threading.Lock()
+
+# One-shot "director's note" injected from the dashboard. Consumed once by
+# the next world-state call, then cleared — it never gets stored in the
+# world-state JSON itself, so the schema the model returns stays untouched.
+_pending_injection = {"text": None}
+injection_lock = threading.Lock()
+
+
+def set_injection(text):
+    with injection_lock:
+        _pending_injection["text"] = text.strip()
+
+
+def pop_injection():
+    with injection_lock:
+        text = _pending_injection["text"]
+        _pending_injection["text"] = None
+        return text

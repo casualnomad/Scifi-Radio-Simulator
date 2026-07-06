@@ -1,10 +1,10 @@
 {
     "meta": {
-        "tick": 4,
+        "tick": 1,
         "session_start": "0600",
-        "current_time": "1145",
+        "current_time": "1245",
         "stream_start": "2026-07-05T23:48:49.010205",
-        "total_transmissions": 249
+        "total_transmissions": 317
     },
     "gate_status": {
         "gate_a": "vacant",
@@ -12,18 +12,18 @@
     },
     "approach_lanes": {
         "Lane 1": "impassable",
-        "Lane 2": "restricted\u2014debris spreading rapidly",
+        "Lane 2": "restricted",
         "Lane 3": "restricted",
         "Lane 4": "restricted",
-        "Lane 5": "marginal"
+        "Lane 5": "impassable"
     },
     "docking_bays": {
-        "Bay 1": "Emergency rescue\u2014ESC-3217 collar engaged, COU-5016 stabilized, evacuation ongoing",
-        "Bay 2": "Occupied\u2014threatened by chunk two impact; 35 meters closure rate critical",
-        "Bay 3": "Vacant",
-        "Bay 4": "Occupied",
-        "Bay 5": "Occupied",
-        "Bay 6": "Occupied"
+        "Bay 1": "occupied",
+        "Bay 2": "occupied",
+        "Bay 3": "occupied",
+        "Bay 4": "occupied",
+        "Bay 5": "occupied",
+        "Bay 6": "occupied"
     },
     "ships": {
         "SCI-2245": {
@@ -35,8 +35,8 @@
             "cargo_flagged": "legal",
             "faction": "Explorers' League",
             "job": "Xenotech Research",
-            "mood": "urgent",
-            "notes": "Debris tracking intensifying; secondary scan complete\u2014no survivors detected in debris field; now coordinating with station on trajectory predictions."
+            "mood": "grim",
+            "notes": "Radiation analysis complete. Identifying isotope signatures from debris. Recommending expanded containment perimeter."
         },
         "ORE-3312": {
             "callsign": "ORE-3312",
@@ -47,68 +47,68 @@
             "cargo_flagged": "legal",
             "faction": "Alliance",
             "job": "Ore hauler",
-            "mood": "anxious",
-            "notes": "Maintaining position; debris perimeter still 2.3 sectors distant; monitoring broadcast alerts continuously."
+            "mood": "cautious",
+            "notes": "Structural integrity confirmed stable. Operations resuming at reduced capacity. Monitoring radiation dispersal."
         },
         "COU-5521": {
             "callsign": "COU-5521",
             "type": "Courier",
-            "status": "evading",
-            "location": "sector one edge",
+            "status": "holding",
+            "location": "Bay 3",
             "cargo": "consumer goods",
             "cargo_flagged": "legal",
             "faction": "Mining Consortium",
             "job": "Station trader",
-            "mood": "desperate",
-            "notes": "Fuel reserves critical at 15%; shields degraded to 48%; chunk three still locked; awaiting course correction clearance urgently."
+            "mood": "concerned",
+            "notes": "Bay 3 containment field holding steady. Structural engineer conducting detailed assessment. Pressure stability nominal."
         },
         "ESC-8643": {
             "callsign": "ESC-8643",
             "type": "Escort Corvette",
-            "location": "Bay 1 perimeter",
-            "status": "intercepting",
+            "location": "sector one approach",
+            "status": "patrolling",
             "cargo": "military supplies",
             "cargo_flagged": "legal",
             "faction": "Alliance",
             "job": "Naval contractor",
-            "mood": "strained",
-            "notes": "Chunk two intercept vector recalculated; now 35 meters from Bay 2 entrance; firing solution locked; secondary engagement imminent."
+            "mood": "focused",
+            "notes": "Debris mapping 47% complete. Identified three high-velocity fragments on collision course with outer docking ring. Coordinating with station defense."
         },
         "COU-5016": {
             "callsign": "COU-5016",
             "type": "Courier",
-            "location": "Bay 1 approach",
-            "status": "emergency",
+            "location": "Bay 1",
+            "status": "damage control",
             "cargo": "electronics",
             "cargo_flagged": "legal",
             "faction": "Pirates",
             "job": "Station trader",
-            "mood": "critical",
-            "notes": "Hull breach contained; crew egress 78% complete; ESC-3217 collar holding stable; power transfer stabilizing; medical teams standing by in Bay 1."
+            "mood": "desperate",
+            "notes": "Second hull breach sealed. Structural integrity now 58%. Crew reports secondary fire in aft compartment. Emergency suppression systems engaged."
         },
         "SAL-3188": {
             "callsign": "SAL-3188",
             "type": "Salvage Tug",
             "location": "sector two",
-            "status": "mining",
+            "status": "salvage",
             "cargo": "scrap",
             "cargo_flagged": "legal",
             "faction": "Pirates",
             "job": "Shipbreaker",
-            "mood": "concerned",
-            "notes": "Debris perimeter now 1.8 sectors away and expanding; operations continuing with heightened caution."
+            "mood": "focused",
+            "notes": "Debris recovery commenced. Tractor beam secured first wreckage section. Radiation levels within acceptable limits for salvage operations."
         },
         "ESC-3217": {
             "callsign": "ESC-3217",
             "type": "Escort Corvette",
-            "location": "Bay 1 approach",
-            "status": "docking",
+            "location": "Bay 1",
+            "status": "secured",
             "cargo": "military supplies",
             "cargo_flagged": "legal",
             "faction": "Independent",
             "job": "Naval contractor",
-            "mood": "focused",
-            "notes": "Emergency collar secure; transferring full emergency power to COU-5016; final crew evacuation pod launching in seconds; containment field stress rising."
+            "mood": "anxious",
+            "notes": "Decontamination procedures initiated. Crew standby in sealed compartments. Status update delayed due to contamination protocols."
         },
         "ESC-611": {
             "callsign": "ESC-611",
@@ -120,63 +120,51 @@
             "faction": "Pirates",
             "job": "Patrol pilot",
             "mood": "alert",
-            "notes": "En route to debris perimeter; tactical updates continuous; ready to engage debris trajectory threats if ordered."
+            "notes": "Debris field scan detected no life signatures. Hazmat dispersal pattern monitored. Weapons systems remain powered down."
         },
-        "SCI-7817": {
-            "callsign": "SCI-7817",
-            "type": "Science Vessel",
-            "location": "approach vector",
-            "status": "standby",
-            "cargo": "samples",
+        "COU-2967": {
+            "callsign": "COU-2967",
+            "type": "Courier",
+            "location": "approaching",
+            "status": "incoming",
+            "cargo": "consumer goods",
             "cargo_flagged": "legal",
             "faction": "Independent",
-            "job": "Deep-space explorer",
-            "mood": "tense",
-            "notes": "Still holding pending clearance; deep-space science mission postponed indefinitely; monitoring station emergency frequencies."
+            "job": "Station trader",
+            "mood": "neutral",
+            "notes": "Inbound transmission received. Requesting clearance to dock. Unaware of detonation event."
         }
     },
     "active_events": [
-        "ESC-3217 emergency collar holding COU-5016 stable; final crew evacuation 78% complete; medical teams mobilizing.",
-        "Chunk two now 35 meters from Bay 2; ESC-8643 firing solution locked; secondary defense intercept incoming.",
-        "COU-5521 fuel at 15% critical threshold; course correction still awaited; three minutes to mandatory engine shutdown.",
-        "Station containment field at 83% integrity; secondary power drain accelerating; core systems rerouting to Bay 1 support.",
-        "Debris perimeter expanding into Lane 2 at accelerated rate; Lane 3 and 4 now fully restricted; only Lane 5 remains marginal."
+        "SCI-7817 debris field expanding. Three high-velocity fragments threatening outer docking ring perimeter.",
+        "COU-5016 secondary fire suppression active. Structural integrity climbing but aft compartments still unstable.",
+        "SAL-3188 debris recovery underway. First wreckage section secured via tractor beam.",
+        "Radiation contamination persists sectors one and two. ESC-3217 crew in sealed decontamination hold.",
+        "COU-2967 inbound to station. Unaware of emergency lockdown. Approach clearance pending.",
+        "Outer docking ring damage assessment required. Three debris fragments on intercept trajectory."
     ],
-    "current_arc": "Corvette sustains crippled courier as debris closes on docks; station power failing under kinetic assault; fuel emergency imminent.",
+    "current_arc": "Crisis stabilizing. Debris threats emerge. Inbound courier unaware of lockdown.",
     "recent_transmissions": [
-        "CAPT-SCI-2245: CAPT-SCI-2245 to Tower, requesting status on emergency distress beacon deployment; is SCI-2245's request being processed?",
-        "AI: Alert: Sector one containment breach protocols failed; station's energy shields now compensating for destabilized sector; multiple docking bays at risk; emergency response teams mobilizing.",
-        "TOWER: Tower to CAPT-COU-5521, Lane 1 is impassable; Lane 2 restricted; debris trajectory suggests imminent impact; request immediate status update.",
-        "CAPT-ESC-3217: CAPT-ESC-3217 to Tower, ETA to COU-5016 is 75 seconds; requesting permission to deploy emergency docking collar upon arrival.",
-        "CAPT-ESC-3217: CAPT-ESC-3217 to Tower, requesting confirmation on Bay 1 status; is it safe for docking?",
-        "AI: Warning: Tractor beam arrest on COU-5016 failing; station defense systems deploying containment field to prevent hull rupture; emergency response teams preparing for rescue operation.",
-        "TOWER: Tower to CAPT-ESC-3217, Bay 1 status is critical; debris imminent; prepare for possible containment field engagement upon arrival; confirm docking collar deployment protocol.",
-        "CAPT-ESC-3217: CAPT-ESC-3217 to Tower, confirm Bay 1 status is critical; debris imminent; will deploy emergency docking collar upon arrival; protocol confirmed.",
-        "AI: Warning: COU-5016 hull breach detected; station medics preparing emergency response team; Bay 1 lockdown status unchanged; debris chunk two 50 meters from dock entrance.",
-        "TOWER: Tower to CAPT-SCI-2245, Lane 1 impassable; recommend caution when navigating sector one perimeter due to expanding debris field.",
-        "CAPT-SCI-2245: CAPT-SCI-2245 to Tower, report on Bay 1 status and any impact on our position near sector one edge; secondary debris trajectories tracked.",
-        "CAPT-SCI-2245: CAPT-SCI-2245 to Tower, Bay 1 status and containment field integrity impact on our position near sector one edge; request updated trajectory analysis for secondary debris threats.",
-        "AI: Warning: Station containment field holding at 86% integrity; secondary power drain accelerating; core systems rerouting; debris chunk three 30 meters from Bay 2 entrance; military/navy on standby for escort corvette ESC-8643.",
-        "TOWER: Tower to CAPT-SCI-2245, Bay 1 status update: rescue in progress; hull breach contained; crew egress 60% complete; containment field holding; debris chunk two 50 meters from dock entrance.",
-        "CAPT-SCI-2245: CAPT-SCI-2245 to Tower, request Bay 2 status and any threats posed by debris chunk two, now 50 meters from dock entrance.",
-        "AI: Warning: Bay 2 containment field integrity critical; debris chunk two trajectory recalculated; collision expected in 5.7 minutes; emergency evacuation procedures initiated for docked ships.",
-        "CAPT-SCI-2245: CAPT-SCI-2245 to Tower, Bay 2 status: is docked ship COU-5521 receiving course correction clearance due to impending fuel emergency.",
-        "TOWER: Tower to CAPT-ESC-8643, Bay 2 containment field integrity critical; chunk two trajectory recalculated; collision expected in 5.7 minutes; prepare for possible containment breach.",
-        "AI: Warning: station core power now 72% depleted; containment field integrity dropping by 0.5% every 15 seconds; secondary systems failing across station infrastructure.",
-        "CAPT-SCI-2245: CAPT-SCI-2245 to Tower, is COU-5521 receiving course correction clearance due to impending fuel emergency; what is current status of COU-5521."
+        "ESC-8643: Fragment one locked. Secondary chunks tracked. Intercept burn commencing in ninety seconds. Containment proceeding nominal.",
+        "TOWER: ESC-8643, confirm tertiary spread containment status\u2014fragments diverging or stabilizing post-intercept burn?",
+        "AI: Debris spread stabilizing sector one. All vessels maintain current positions. Containment field holding at 78% integrity.",
+        "ESC-8643: Fragment one locked, secondary chunks tracked. Intercept burn commencing in ninety seconds. Spread stabilizing post-burn.",
+        "TOWER: SCI-7817, this is Tower. Cut reactor cascade immediately. Divert to Bay 2 or execute emergency deorbit. Ten minutes to impact unacceptable.",
+        "SCI-2245: Tower, confirm\u2014detecting radiation spike from SCI-7817 approach vector inconsistent with containment harmonics. Reactor cascade?",
+        "AI: All vessels, SCI-7817 reactor cascade critical. Evacuate approach lanes immediately. Emergency docking Bay 2 available\u2014SCI-7817 divert now or deorbit.",
+        "TOWER: SCI-7817, Bay 2 emergency dock available now. Cut reactor cascade and divert immediately or execute emergency deorbit. Nine minutes remaining.",
+        "SCI-2245: Tower, confirm radiation spike from SCI-7817 vector. Reactor cascade anomaly detected by our instruments?",
+        "SCI-2245: Tower, radiation signature confirms cascade instability. Recommend immediate evacuation protocol for all personnel in sectors one through three.",
+        "AI: All personnel to emergency stations. SCI-7817 detonation imminent. Containment field holding. Brace for impact.",
+        "AI: SCI-7817 detonation imminent. All vessels maintain current positions. Containment field at eighty-two percent integrity. Brace for impact.",
+        "AI: All personnel remain emergency stations. Detonation estimated thirty seconds. Containment field holding at eighty-two percent. Brace impact.",
+        "AI: SCI-7817 detonation occurred. Containment field absorbed primary blast. All personnel report status to nearest emergency station immediately.",
+        "TOWER: COU-5016, Bay 1 structural integrity critical. Evacuate to Bay 7 immediately. Welding teams stand by for transfer assistance.",
+        "AI: All vessels stand by. Radiation containment protocols active across sectors one and two. Debris recovery operations commencing. Report hazardous material encounters immediately.",
+        "AI: Radiation levels elevated in sectors one and two. All personnel complete decontamination before station access. Debris recovery priority.",
+        "TOWER: SAL-3188, debris recovery clearance granted. Sector two approach only. Report hazardous material encounters immediately.",
+        "ESC-8643: Sector one debris mapping complete. Tracking three hazardous material signatures. Recommend expanding restricted perimeter to Lane 1 northern approach.",
+        "TOWER: COU-2967, emergency lockdown in effect. Divert to holding pattern. Stand by for updated clearance."
     ],
-    "pending_queries": [
-        {
-            "from": "COU-5521",
-            "query": "Requesting emergency course correction authorization to exit sector one",
-            "answered": false,
-            "repeated": 1
-        },
-        {
-            "from": "ESC-8643",
-            "query": "Requesting secondary intercept authorization for chunk two ricochet trajectory",
-            "answered": false,
-            "repeated": 1
-        }
-    ]
+    "pending_queries": []
 }
