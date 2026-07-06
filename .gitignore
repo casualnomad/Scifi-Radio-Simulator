@@ -223,5 +223,7 @@ pipervoices
 snapshots
 .DS_Store
 
-
+apikey.py
 __init__.py
+config.py
+worldstate_baseline.json

@@ -1,165 +1,182 @@
 {
     "meta": {
-        "tick": 0,
-        "session_start": "0001",
-        "current_time": "0105"
+        "tick": 4,
+        "session_start": "0600",
+        "current_time": "1145",
+        "stream_start": "2026-07-05T23:48:49.010205",
+        "total_transmissions": 249
     },
     "gate_status": {
         "gate_a": "vacant",
-        "gate_b": "busy"
+        "gate_b": "occupied"
     },
     "approach_lanes": {
-        "Lane 1": "restricted",
-        "Lane 2": "available",
+        "Lane 1": "impassable",
+        "Lane 2": "restricted\u2014debris spreading rapidly",
         "Lane 3": "restricted",
-        "Lane 4": "vacant"
+        "Lane 4": "restricted",
+        "Lane 5": "marginal"
     },
     "docking_bays": {
-        "Dock 1": "vacant",
-        "Dock 2": "occupied",
-        "Dock 3": "occupied",
-        "Dock 4": "occupied",
-        "Dock 5": "occupied",
-        "Dock 6": "vacant",
-        "Dock 7": "occupied"
+        "Bay 1": "Emergency rescue\u2014ESC-3217 collar engaged, COU-5016 stabilized, evacuation ongoing",
+        "Bay 2": "Occupied\u2014threatened by chunk two impact; 35 meters closure rate critical",
+        "Bay 3": "Vacant",
+        "Bay 4": "Occupied",
+        "Bay 5": "Occupied",
+        "Bay 6": "Occupied"
     },
     "ships": {
-        "NVY-2257": {
-            "callsign": "NVY-2257",
-            "type": "Navy Ship",
-            "status": "tracking",
-            "location": "sector four",
-            "cargo": null,
-            "cargo_flagged": false,
-            "faction": "Navy",
-            "job": "Law Enforcement",
-            "mood": "determined",
-            "notes": "Suspects traced to a specific sector entrance."
-        },
-        "SCI-5408": {
-            "callsign": "SCI-5408",
+        "SCI-2245": {
+            "callsign": "SCI-2245",
             "type": "Science Vessel",
-            "status": "sampling",
-            "location": "outer scan range",
-            "cargo": "artifact sample",
-            "cargo_flagged": "restricted",
+            "status": "monitoring",
+            "location": "sector one perimeter",
+            "cargo": "mineral samples",
+            "cargo_flagged": "legal",
             "faction": "Explorers' League",
             "job": "Xenotech Research",
-            "mood": "focused",
-            "notes": "Spectral analysis progressing."
+            "mood": "urgent",
+            "notes": "Debris tracking intensifying; secondary scan complete\u2014no survivors detected in debris field; now coordinating with station on trajectory predictions."
         },
-        "ORE-4817": {
-            "callsign": "ORE-4817",
+        "ORE-3312": {
+            "callsign": "ORE-3312",
             "type": "Mining Barge",
+            "status": "mining",
             "location": "sector six",
-            "status": "stabilizing",
             "cargo": "ore",
             "cargo_flagged": "legal",
             "faction": "Alliance",
             "job": "Ore hauler",
-            "mood": "hopeful",
-            "notes": "Receiving support from ORE-7747; structural integrity holding."
+            "mood": "anxious",
+            "notes": "Maintaining position; debris perimeter still 2.3 sectors distant; monitoring broadcast alerts continuously."
         },
-        "REF-2918": {
-            "callsign": "REF-2918",
-            "type": "Repair Tender",
-            "location": "docking bay 5",
-            "status": "docked",
-            "cargo": "repair kits",
-            "cargo_flagged": "legal",
-            "faction": "Pirates",
-            "job": "Salvage engineer",
-            "mood": "relieved",
-            "notes": "Repair operations completed."
-        },
-        "ESC-1357": {
-            "callsign": "ESC-1357",
-            "type": "Escort Corvette",
-            "location": "sector one",
-            "status": "evading_combat",
-            "cargo": "none",
-            "cargo_flagged": "legal",
-            "faction": "Mining Consortium",
-            "job": "Escort captain",
-            "mood": "desperate",
-            "notes": "Under heavy fire; damage accumulating."
-        },
-        "COU-4904": {
-            "callsign": "COU-4904",
+        "COU-5521": {
+            "callsign": "COU-5521",
             "type": "Courier",
-            "location": "docking bay 3",
-            "status": "trading",
+            "status": "evading",
+            "location": "sector one edge",
             "cargo": "consumer goods",
             "cargo_flagged": "legal",
             "faction": "Mining Consortium",
             "job": "Station trader",
-            "mood": "excited",
-            "notes": "Trade operations ongoing."
+            "mood": "desperate",
+            "notes": "Fuel reserves critical at 15%; shields degraded to 48%; chunk three still locked; awaiting course correction clearance urgently."
         },
-        "ESC-835": {
-            "callsign": "ESC-835",
+        "ESC-8643": {
+            "callsign": "ESC-8643",
             "type": "Escort Corvette",
-            "location": "sector one",
-            "status": "engaging_combat",
-            "cargo": "ammo",
+            "location": "Bay 1 perimeter",
+            "status": "intercepting",
+            "cargo": "military supplies",
             "cargo_flagged": "legal",
-            "faction": "Religious Order",
-            "job": "Escort captain",
-            "mood": "determined",
-            "notes": "Intervening to protect the sector."
+            "faction": "Alliance",
+            "job": "Naval contractor",
+            "mood": "strained",
+            "notes": "Chunk two intercept vector recalculated; now 35 meters from Bay 2 entrance; firing solution locked; secondary engagement imminent."
         },
-        "FRG-8707": {
-            "callsign": "FRG-8707",
-            "type": "Frigate",
-            "location": "sector one",
-            "status": "engaging",
-            "cargo": "weapons",
-            "cargo_flagged": "restricted",
-            "faction": "Religious Order",
-            "job": "Pirate raider",
-            "mood": "aggressive",
-            "notes": "Continuing aggressive assault against the targets."
+        "COU-5016": {
+            "callsign": "COU-5016",
+            "type": "Courier",
+            "location": "Bay 1 approach",
+            "status": "emergency",
+            "cargo": "electronics",
+            "cargo_flagged": "legal",
+            "faction": "Pirates",
+            "job": "Station trader",
+            "mood": "critical",
+            "notes": "Hull breach contained; crew egress 78% complete; ESC-3217 collar holding stable; power transfer stabilizing; medical teams standing by in Bay 1."
         },
-        "ORE-7747": {
-            "location": "sector six",
-            "status": "assisting",
-            "mood": "cooperative",
-            "notes": "Providing support to ORE-4817.",
-            "faction": "Unknown",
-            "job": "Unknown"
+        "SAL-3188": {
+            "callsign": "SAL-3188",
+            "type": "Salvage Tug",
+            "location": "sector two",
+            "status": "mining",
+            "cargo": "scrap",
+            "cargo_flagged": "legal",
+            "faction": "Pirates",
+            "job": "Shipbreaker",
+            "mood": "concerned",
+            "notes": "Debris perimeter now 1.8 sectors away and expanding; operations continuing with heightened caution."
+        },
+        "ESC-3217": {
+            "callsign": "ESC-3217",
+            "type": "Escort Corvette",
+            "location": "Bay 1 approach",
+            "status": "docking",
+            "cargo": "military supplies",
+            "cargo_flagged": "legal",
+            "faction": "Independent",
+            "job": "Naval contractor",
+            "mood": "focused",
+            "notes": "Emergency collar secure; transferring full emergency power to COU-5016; final crew evacuation pod launching in seconds; containment field stress rising."
+        },
+        "ESC-611": {
+            "callsign": "ESC-611",
+            "type": "Escort Corvette",
+            "location": "sector two approach",
+            "status": "patrolling",
+            "cargo": "security supplies",
+            "cargo_flagged": "legal",
+            "faction": "Pirates",
+            "job": "Patrol pilot",
+            "mood": "alert",
+            "notes": "En route to debris perimeter; tactical updates continuous; ready to engage debris trajectory threats if ordered."
+        },
+        "SCI-7817": {
+            "callsign": "SCI-7817",
+            "type": "Science Vessel",
+            "location": "approach vector",
+            "status": "standby",
+            "cargo": "samples",
+            "cargo_flagged": "legal",
+            "faction": "Independent",
+            "job": "Deep-space explorer",
+            "mood": "tense",
+            "notes": "Still holding pending clearance; deep-space science mission postponed indefinitely; monitoring station emergency frequencies."
         }
     },
     "active_events": [
-        "FRG-8707 heavily pressures ESC-1357 in sector one.",
-        "NVY-2257 tracks data siphon suspects to a specific sector."
+        "ESC-3217 emergency collar holding COU-5016 stable; final crew evacuation 78% complete; medical teams mobilizing.",
+        "Chunk two now 35 meters from Bay 2; ESC-8643 firing solution locked; secondary defense intercept incoming.",
+        "COU-5521 fuel at 15% critical threshold; course correction still awaited; three minutes to mandatory engine shutdown.",
+        "Station containment field at 83% integrity; secondary power drain accelerating; core systems rerouting to Bay 1 support.",
+        "Debris perimeter expanding into Lane 2 at accelerated rate; Lane 3 and 4 now fully restricted; only Lane 5 remains marginal."
     ],
-    "current_arc": "ESC-835 intervenes in sector one combat while NVY-2257 narrows the suspect pursuit.",
+    "current_arc": "Corvette sustains crippled courier as debris closes on docks; station power failing under kinetic assault; fuel emergency imminent.",
     "recent_transmissions": [
-        "CAPT: NVY-two-two-five-seven, this is Captain NVY-two-two-five-seven. Any updates on your investigation in sector four? Over.",
-        "AI: Attention all ships, the mining barge ORE-four-eight-one-seven is in distress. Please assist.",
-        "TOWER: ORE-four-eight-one-seven, this is Tower. Your progress in sector six is noted. Are you in need of further assistance?",
-        "CAPT: NVY-two-two-five-seven, this is Captain NVY-two-two-five-seven. Your sector four investigation is ongoing \u2014 any new developments? Over.",
-        "AI: Attention all ships, the mining barge ORE-four-eight-one-seven is in distress. Please assist.",
-        "TOWER: ORE-four-eight-one-seven, this is Tower. Your progress in sector six is noted. Are you in need of further assistance?",
-        "CAPT: NVY-two-two-five-seven, this is Captain. Your sector four investigation is ongoing \u2014 any new developments? Over.",
-        "AI: Attention all ships, the pirate frigate FRG-eight-seven-zero-seven is closing in on ESC-one-three-five-seven in sector one. Provide assistance if you can.",
-        "TOWER: ORE-four-eight-one-seven, this is Tower. Your progress in sector six is noted. Are you in need of further assistance?",
-        "CAPT: NVY-two-two-five-seven, this is Captain. Your sector four investigation is ongoing \u2014 any new developments? Over.",
-        "AI: Attention all ships, the pirate frigate FRG-eight-seven-zero-seven is closing in on ESC-one-three-five-seven in sector one. Provide assistance if you can.",
-        "TOWER: ORE-four-eight-one-seven, this is Tower. Your progress in sector six is noted. Are you in need of further assistance?",
-        "CAPT: NVY-two-two-five-seven, this is Captain. Any new developments in sector four? Over.",
-        "AI: Attention all ships, the pirate frigate FRG-eight-seven-zero-seven is closing in on ESC-one-three-five-seven in sector one. Provide assistance if you can.",
-        "TOWER: ORE-four-eight-one-seven, this is Tower. Your status in sector six is noted. Are you in need of further assistance?",
-        "CAPT: NVY-two-two-five-seven, this is Captain. Any new developments in sector four? Over.",
-        "AI: Attention all ships, FRG-eight-seven-zero-seven is closing in on ESC-one-three-five-seven in sector one. Provide support if possible.",
-        "TOWER: NVY-two-two-five-seven, this is Tower. Sector four is clear. No new developments."
+        "CAPT-SCI-2245: CAPT-SCI-2245 to Tower, requesting status on emergency distress beacon deployment; is SCI-2245's request being processed?",
+        "AI: Alert: Sector one containment breach protocols failed; station's energy shields now compensating for destabilized sector; multiple docking bays at risk; emergency response teams mobilizing.",
+        "TOWER: Tower to CAPT-COU-5521, Lane 1 is impassable; Lane 2 restricted; debris trajectory suggests imminent impact; request immediate status update.",
+        "CAPT-ESC-3217: CAPT-ESC-3217 to Tower, ETA to COU-5016 is 75 seconds; requesting permission to deploy emergency docking collar upon arrival.",
+        "CAPT-ESC-3217: CAPT-ESC-3217 to Tower, requesting confirmation on Bay 1 status; is it safe for docking?",
+        "AI: Warning: Tractor beam arrest on COU-5016 failing; station defense systems deploying containment field to prevent hull rupture; emergency response teams preparing for rescue operation.",
+        "TOWER: Tower to CAPT-ESC-3217, Bay 1 status is critical; debris imminent; prepare for possible containment field engagement upon arrival; confirm docking collar deployment protocol.",
+        "CAPT-ESC-3217: CAPT-ESC-3217 to Tower, confirm Bay 1 status is critical; debris imminent; will deploy emergency docking collar upon arrival; protocol confirmed.",
+        "AI: Warning: COU-5016 hull breach detected; station medics preparing emergency response team; Bay 1 lockdown status unchanged; debris chunk two 50 meters from dock entrance.",
+        "TOWER: Tower to CAPT-SCI-2245, Lane 1 impassable; recommend caution when navigating sector one perimeter due to expanding debris field.",
+        "CAPT-SCI-2245: CAPT-SCI-2245 to Tower, report on Bay 1 status and any impact on our position near sector one edge; secondary debris trajectories tracked.",
+        "CAPT-SCI-2245: CAPT-SCI-2245 to Tower, Bay 1 status and containment field integrity impact on our position near sector one edge; request updated trajectory analysis for secondary debris threats.",
+        "AI: Warning: Station containment field holding at 86% integrity; secondary power drain accelerating; core systems rerouting; debris chunk three 30 meters from Bay 2 entrance; military/navy on standby for escort corvette ESC-8643.",
+        "TOWER: Tower to CAPT-SCI-2245, Bay 1 status update: rescue in progress; hull breach contained; crew egress 60% complete; containment field holding; debris chunk two 50 meters from dock entrance.",
+        "CAPT-SCI-2245: CAPT-SCI-2245 to Tower, request Bay 2 status and any threats posed by debris chunk two, now 50 meters from dock entrance.",
+        "AI: Warning: Bay 2 containment field integrity critical; debris chunk two trajectory recalculated; collision expected in 5.7 minutes; emergency evacuation procedures initiated for docked ships.",
+        "CAPT-SCI-2245: CAPT-SCI-2245 to Tower, Bay 2 status: is docked ship COU-5521 receiving course correction clearance due to impending fuel emergency.",
+        "TOWER: Tower to CAPT-ESC-8643, Bay 2 containment field integrity critical; chunk two trajectory recalculated; collision expected in 5.7 minutes; prepare for possible containment breach.",
+        "AI: Warning: station core power now 72% depleted; containment field integrity dropping by 0.5% every 15 seconds; secondary systems failing across station infrastructure.",
+        "CAPT-SCI-2245: CAPT-SCI-2245 to Tower, is COU-5521 receiving course correction clearance due to impending fuel emergency; what is current status of COU-5521."
     ],
     "pending_queries": [
         {
-            "from": "CAPT",
-            "query": "Any new developments in sector four?",
+            "from": "COU-5521",
+            "query": "Requesting emergency course correction authorization to exit sector one",
             "answered": false,
-            "repeated": 2
+            "repeated": 1
+        },
+        {
+            "from": "ESC-8643",
+            "query": "Requesting secondary intercept authorization for chunk two ricochet trajectory",
+            "answered": false,
+            "repeated": 1
         }
     ]
 }

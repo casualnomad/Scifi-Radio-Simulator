@@ -280,6 +280,8 @@
       <span><span class="pulse-dot"></span>SESSION <span class="val" id="session-start">--</span></span>
       <span>GATE TIME <span class="val" id="current-time">--:--</span></span>
       <span>TICK <span class="val" id="tick">0</span></span>
+      <span>UPTIME <span class="val" id="stream-uptime">00:00:00</span></span>
+      <span>TRANSMISSIONS <span class="val" id="tx-count">0</span></span>
       <span id="story-update-badge" class="story-badge">WORLD UPDATED</span>
     </div>
   </header>
@@ -355,6 +357,24 @@ function parseSpeaker(line) {
   return { role: "unknown", label: head, msg };
 }
 
+// Stream uptime: anchored to world.meta.stream_start (set once by main.py on
+// first launch) so it survives dashboard reloads and process restarts alike.
+let streamStartMs = null;
+
+function formatUptime(ms) {
+  const totalSec = Math.floor(ms / 1000);
+  const h = String(Math.floor(totalSec / 3600)).padStart(2, "0");
+  const m = String(Math.floor((totalSec % 3600) / 60)).padStart(2, "0");
+  const s = String(totalSec % 60).padStart(2, "0");
+  return `${h}:${m}:${s}`;
+}
+
+function tickUptime() {
+  if (streamStartMs === null) return;
+  document.getElementById("stream-uptime").textContent = formatUptime(Date.now() - streamStartMs);
+}
+setInterval(tickUptime, 1000);
+
 function coilClass(text) {
   if (!text) return "nominal";
   const t = text.toLowerCase();
@@ -369,7 +389,7 @@ function getGateB(gs) { return gs.gate_b ?? gs.coil_b; }
 function laneClass(text) {
   if (!text) return "other";
   const t = text.toLowerCase();
-  if (t.includes("clear") || t.includes("empty") || t.includes("vacant") || t.includes("free") || t.includes("available")) return "clear";
+  if (t.includes("clear") || t.includes("empty") || t.includes("vacant") || t.includes("free") || t.includes("available") || t.includes("open")) return "clear";
   if (t.includes("hold") || t.includes("quarantine") || t.includes("restrict") || t.includes("busy") || t.includes("occupied")) return "hold";
   return "other";
 }
@@ -426,6 +446,7 @@ function render(world, diff) {
   document.getElementById("session-start").textContent = world.meta?.session_start ?? "--";
   document.getElementById("current-time").textContent = world.meta?.current_time ?? "--:--";
   document.getElementById("tick").textContent = world.meta?.tick ?? 0;
+  document.getElementById("tx-count").textContent = world.meta?.total_transmissions ?? 0;
   document.getElementById("arc-text").textContent = world.current_arc || "No active situation report.";
   document.querySelector(".arcbar").classList.toggle("changed", diff.arcChanged);
 
@@ -549,6 +570,13 @@ async function poll() {
     const res = await fetch(WORLDSTATE_PATH + "?t=" + Date.now(), { cache: "no-store" });
     if (!res.ok) throw new Error("HTTP " + res.status);
     const world = await res.json();
+
+    if (streamStartMs === null) {
+      streamStartMs = world.meta?.stream_start
+        ? new Date(world.meta.stream_start).getTime()
+        : Date.now();
+      tickUptime();
+    }
 
     const currentTick = world.meta?.tick ?? 0;
 

@@ -8,13 +8,15 @@ def modulate_audio(character):
     # Load your TTS output audio (WAV)
     audio = AudioSegment.from_wav("SFX/temp_TTSoutput.wav")
     samples = np.array(audio.get_array_of_samples()) # Convert to numpy array
+    print("Voice mod Char = " + character)
     
     if character == "AI":
         char_ai(audio)
-    elif character == "TOWER":
-        char_asmr_muffled(audio)
-    else:
+    elif character == "Captain":
         char_captain(samples, audio)
+    else:
+       clean_audio(audio)
+        
 
 # ==========================================
 # 🤖 AI CHARACTER EFFECTS
@@ -199,6 +201,12 @@ def char_asmr_muffled(audio):
     muffled_audio = muffled_audio.normalize()
     muffled_audio.export("SFX/output.wav", format="wav")
     print("🤫 Muffled ASMR audio processing complete.")
+    
+    
+def clean_audio(audio):
+    
+    audio.export("SFX/output.wav", format="wav")
+    print("Clean audio processing complete.")
 
 
 # ==========================================
