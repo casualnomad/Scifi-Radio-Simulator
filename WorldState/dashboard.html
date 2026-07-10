@@ -434,7 +434,7 @@ function laneClass(text) {
   if (!text) return "other";
   const t = text.toLowerCase();
   if (t.includes("clear") || t.includes("empty") || t.includes("vacant") || t.includes("free") || t.includes("available")) return "clear";
-  if (t.includes("hold") || t.includes("quarantine") || t.includes("restrict") || t.includes("busy") || t.includes("occupied")) return "hold";
+  if (t.includes("hold") || t.includes("quarantine") || t.includes("restrict") || t.includes("busy") || t.includes("occupied") || t.includes("hazard") || t.includes("failure")|| t.includes("impassable")|| t.includes("lockdown")|| t.includes("collapsed")|| t.includes("destroyed") || t.includes("compromised")) return "hold";
   return "other";
 }
 

@@ -22,8 +22,12 @@ Rules:
 
 pending_queries: list of {"from", "query", "answered"}, max 3, oldest dropped first. Add when CAPT asks TOWER/AI a question ("answered": false). Set true only when TOWER/AI replies DIRECTLY to that callsign — a general broadcast doesn't count.
 
-Return JSON only, no markdown, no explanation. Match this exact structure — this is a real example, replace the values with what's actually happening, only include ships that changed:
-{"ships": {"NVY-1140": {"location": "sector one", "status": "patrolling", "mood": "alert", "notes": "Standard patrol continuing.", "faction": "Navy", "job": "Law Enforcement"}}, "active_events": ["A quiet morning shift continues at the gate."], "current_arc": "Routine operations continue at the gate.", "meta": {"tick": 0, "current_time": "0610"}, "gate_status": {"gate_a": "vacant", "gate_b": "vacant"}, "docking_bays": {"Dock 1": "vacant", "Dock 2": "occupied"}, "approach_lanes": {"Lane 1": "available", "Lane 2": "vacant"}, "pending_queries": [{"from": "NVY-1140", "query": "Requesting docking clearance", "answered": false}]}"""
+Return JSON only, no markdown, no explanation. ship notes: MAX 120 characters per ship. 
+Lane status must be exactly ONE of: available, occupied, vacant, impassable, hazard, restricted, incoming
+Gate status must be exactly ONE of: vacant, occupied, hold, lockdown, failure
+Bay status must be exactly ONE of: available, occupied, docking, undocking, compromised, collapsed, destroyed
+Match this structure — this is a real example. Only return fields that have changed or updated:
+{"ships": {"NVY-1140": {"location": "sector one", "status": "patrolling", "mood": "alert", notes: MAX 120 characters, remove if needed", "faction": "Navy", "job": "Law Enforcement"}}, "active_events": ["A quiet morning shift continues at the gate."], "current_arc": "Routine operations continue at the gate.", "meta": {"tick": 0, "current_time": "0610"}, "gate_status": {"gate_a": "vacant", "gate_b": "vacant"}, "docking_bays": {"Bay 1": "vacant", "Bay 2": "occupied", "Bay 3": "vacant", "Bay 4": "occupied", "Bay 5": "vacant", "Bay 6": "occupied"}, "approach_lanes": {"Lane 1": "available", "Lane 2": "vacant"}, "pending_queries": [{"from": "NVY-1140", "query": "Requesting docking clearance", "answered": false}]}"""
 
 
 def build_world_prompt():

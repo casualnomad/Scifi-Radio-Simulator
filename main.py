@@ -13,8 +13,8 @@ import pygame
 from TTS import backgroundsfx
 from TTS.texttospeech import generate_tts
 from WorldState.worldstate import world, worldstate_save, story_lock, set_injection
-from LLM.generateTransmission import generate_radio_chatter
-from LLM.generateStory import generate_world_state
+from LLM.generateTransmission import generate_radio_chatter, generate_local_radio_chatter
+from LLM.generateStory import generate_world_state, generate_local_world_state
 
 story_thread = None
 
@@ -130,7 +130,7 @@ def main():
                         )
                         story_thread.start()
 
-            chatter = generate_radio_chatter()
+            chatter = generate_local_radio_chatter()
 
             if not chatter or chatter == "System: Comms link failure.":
                 print("No response from comms.")
