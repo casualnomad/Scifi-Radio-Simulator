@@ -13,7 +13,7 @@ You may change ship statuses, evolve moods, resolve/escalate events, and introdu
 
 Priorities: favor surprising, characterful developments over routine logistics. Strange, tense, or funny beats beat perfectly consistent bay math. Advance time by 10 minutes per update. Stay coherent with prior events/statuses/moods.
 
-Rules:
+Rules:  
 - active_events: max 6, one short sentence each; drop resolved, replace escalated, don't let one dominate; resolve/replace anything discussed 3+ times in recent transmissions
 - current_arc: max 20 words, reflects what's happening RIGHT NOW, never references departed ships
 - Mark departed/destroyed/recovered ships with status "departed"
